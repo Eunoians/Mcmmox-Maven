@@ -35,7 +35,31 @@ Categories:
       McRPGExp: 1000
     Pufferfish:
       Material: PUFFERFISH
+      #The default chance provided no modifiers are applicable
+      #If 100%, it guarantees it as a "potential drop". If there is an 80% and a 100%, then if the 80% gets added to the 'box of drops'
+      #then it randomly picks between the two. TLDR this is the chance of being added to the box of drops
       Chance: '13.0'
+      #These will modify the chance of this item being a possible selection for fishing loot
+      ChanceModifiers:
+        Filters:
+          #If there are multliple filters applicable, what chance should be used
+          #
+          #  highest - use the highest percent available (default)
+          #  lowest - use the lowest percent available
+          #  first - use the first filter applicable
+          #  last - use the last applicable filter
+          #  average - average all the chances from the filters
+          #
+          FilterMode: 'highest'
+          Day:
+            Filter: 'time:day'
+            Chance: 10.0
+          Night:
+            Filter: 'time:night'
+            Chance: 0.0
+          Forest:
+            Filter: 'biome:forest'
+            Chance: 100.0
       Amount: 1
       VanillaExp: '1-5'
       McRPGExp: 500
