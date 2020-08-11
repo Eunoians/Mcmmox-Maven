@@ -2,9 +2,12 @@ package us.eunoians.mcrpg.api.util.fishing;
 
 import lombok.Getter;
 import org.bukkit.Material;
+import us.eunoians.mcrpg.api.util.Methods;
+import us.eunoians.mcrpg.types.Skills;
 import us.eunoians.mcrpg.types.UnlockedAbilities;
 import us.eunoians.mcrpg.util.Parser;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,21 +29,58 @@ public class FishingItem {
   @Getter private List<String> lore;
   @Getter private EnchantmentMeta enchantmentMeta;
   @Getter private PotionMeta potionMeta;
+  @Getter private ChanceFilterMode filterMode;
+  @Getter private List<ChanceModifier> chanceModifiers = new ArrayList<>();
   @Getter private Map<UnlockedAbilities, FishingItemDep> dependancies = new HashMap<>();
 
   public FishingItem(String filePath){
+    
     this.itemType = Material.getMaterial(getFishingLootConfig().getString(filePath + "Material", "AIR"));
     this.chance = new Parser(getFishingLootConfig().getString(filePath + "Chance", "1.0"));
+    
+    if(getFishingLootConfig().contains(filePath + "ChanceModifiers")){
+      
+      String tempKey = filePath + "ChanceModifiers.Filters";
+      ChanceFilterMode filterMode = ChanceFilterMode.getFromID(getFishingLootConfig().getString(tempKey + ".FilterMode", "highest"));
+      
+      for(String filter : getFishingLootConfig().getConfigurationSection(tempKey).getKeys(false)){
+      
+        String subKey = tempKey + "." + filter + ".";
+        double chance = getFishingLootConfig().getDouble(subKey + "Chance", 0.0);
+        String[] filterInfo = getFishingLootConfig().getString(subKey + "Filter").split(":");
+        
+        Object validationCriteria;
+        
+        ChanceModifierType chanceModifierType = ChanceModifierType.getFromID(filterInfo[0]);
+        
+        if(chanceModifierType == ChanceModifierType.SKILL){
+          Skills skills = Skills.fromString(filterInfo[1]);
+          Integer minimumLevel = Integer.parseInt(filterInfo[2]);
+  
+          validationCriteria = new ChanceModifierType.ChanceSkillMetaData(skills, minimumLevel);
+        }
+        else if(Methods.isInt(filterInfo[1])){
+          validationCriteria = Integer.parseInt(filterInfo[1]);
+        }
+        else{
+          validationCriteria = filterInfo[1];
+        }
+        
+        ChanceModifier chanceModifier = new ChanceModifier(chanceModifierType, validationCriteria, chance);
+        chanceModifiers.add(chanceModifier);
+      }
+    }
+    
     String[] amountRange = getFishingLootConfig().getString(filePath + "Amount", "1").split("-");
+    
     this.lowEndAmount = Integer.parseInt(amountRange[0]);
     this.highEndAmount = amountRange.length > 1 ? Integer.parseInt(amountRange[1]) : lowEndAmount;
-    String[] durabilityRange = getFishingLootConfig().getString(filePath + "DurabilityRange", "0").split("-");
-  //  this.lowEndDurability = Integer.parseInt(durabilityRange[0]);
-//    this.highEndDurability = durabilityRange.length > 1 ? Integer.parseInt(durabilityRange[1]) : lowEndDurability;
+    
     String[] expRange = getFishingLootConfig().getString(filePath + "VanillaExp", "0").split("-");
     this.lowEndVanillaExpAmount = Integer.parseInt(expRange[0]);
     this.highEndVanillaExpAmount = expRange.length > 1 ? Integer.parseInt(expRange[1]) : highEndAmount;
     this.mcrpgExpValue = getFishingLootConfig().getInt(filePath + "McRPGExp", 0);
+    
     if(getFishingLootConfig().contains(filePath + "DisplayName")) {
       this.displayName = getFishingLootConfig().getString(filePath + "DisplayName");
     }
@@ -53,6 +93,7 @@ public class FishingItem {
     if(getFishingLootConfig().contains(filePath + "PotionMeta")){
       this.potionMeta = new PotionMeta(filePath + "PotionMeta.");
     }
+    
     if(getFishingLootConfig().contains(filePath + "Dependencies")){
       for(String dep : getFishingLootConfig().getConfigurationSection(filePath + "Dependencies").getKeys(false)){
         if(UnlockedAbilities.isAbility(dep)){

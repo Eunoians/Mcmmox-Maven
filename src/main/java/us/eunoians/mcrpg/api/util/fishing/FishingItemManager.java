@@ -53,10 +53,27 @@ public class FishingItemManager {
     List<FishingItem> returnItems = new ArrayList<>();
     while(returnItems.isEmpty()) {
       for (FishingItem fishingItem : items) {
+        
         Parser equation = fishingItem.getChance();
         int tier = (ability != null && ability.getCurrentTier() != 0) ? ability.getCurrentTier() : 1;
         equation.setVariable("tier", tier);
-        int chance = (int) (equation.getValue() * 1000);
+        double tempValue = equation.getValue();
+        
+        List<Double> potentialChances = new ArrayList<>();
+        
+        if(fishingItem.getChanceModifiers().size() > 0){
+          for(ChanceModifier chanceModifier : fishingItem.getChanceModifiers()){
+            if(chanceModifier.checkCriteria(player.getPlayer())){
+              potentialChances.add(chanceModifier.getChanceIfSuccessful());
+            }
+          }
+        }
+        
+        if(potentialChances.size() > 0){
+          tempValue = fishingItem.getFilterMode().getChanceFilterEquation().findChance(potentialChances);
+        }
+        
+        int chance = (int) (tempValue * 1000);
         int val = rand.nextInt(100000);
         if (chance >= val) {
           returnItems.add(fishingItem);

@@ -6,7 +6,7 @@ plugins {
 }
 
 //from now on this is how you'll change version
-def versionObj = new Version(major: 1, minor: 4, patch: 0, fix: 0, state: 'BETA')
+def versionObj = new Version(major: 1, minor: 5, patch: 0, fix: 0, state: 'BETA-SNAPSHOT')
 
 group 'us.eunoians'
 version = "${versionObj.toString()}"
@@ -49,6 +49,7 @@ dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.14.4-R0.1-SNAPSHOT'
     compile 'org.bstats:bstats-bukkit:1.7'
     compileOnly files('libs/Sickle.jar')
+    compileOnly files('libs/Seasons.jar')
     compileOnly files('libs/SpartanAPI.jar')
     compileOnly files('libs/mcMMO.jar')
 

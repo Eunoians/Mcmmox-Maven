@@ -60,6 +60,8 @@ Categories:
           Forest:
             Filter: 'biome:forest'
             Chance: 100.0
+          Swords:
+            Filter: 'skill:swords:100'
       Amount: 1
       VanillaExp: '1-5'
       McRPGExp: 500
