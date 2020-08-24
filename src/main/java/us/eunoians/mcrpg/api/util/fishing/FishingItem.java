@@ -41,11 +41,12 @@ public class FishingItem {
     if(getFishingLootConfig().contains(filePath + "ChanceModifiers")){
       
       String tempKey = filePath + "ChanceModifiers.Filters";
-      ChanceFilterMode filterMode = ChanceFilterMode.getFromID(getFishingLootConfig().getString(tempKey + ".FilterMode", "highest"));
+      filterMode = ChanceFilterMode.getFromID(getFishingLootConfig().getString(tempKey + ".FilterMode", "highest"));
       
       for(String filter : getFishingLootConfig().getConfigurationSection(tempKey).getKeys(false)){
       
         String subKey = tempKey + "." + filter + ".";
+        System.out.println(subKey);
         double chance = getFishingLootConfig().getDouble(subKey + "Chance", 0.0);
         String[] filterInfo = getFishingLootConfig().getString(subKey + "Filter").split(":");
         
