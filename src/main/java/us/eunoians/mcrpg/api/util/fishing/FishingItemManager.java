@@ -75,6 +75,14 @@ public class FishingItemManager {
         
         int chance = (int) (tempValue * 1000);
         int val = rand.nextInt(100000);
+        
+        //Handle 100% chance cases
+        if(chance == 100){
+          returnItems.clear();
+          returnItems.add(fishingItem);
+          break;
+        }
+        
         if (chance >= val) {
           returnItems.add(fishingItem);
         }

@@ -244,7 +244,7 @@ public enum ChanceModifierType{
    *
    * @return The {@link String} id mapped to this enum value
    */
-  private String getID(){
+  public String getID(){
     return this.id;
   }
   

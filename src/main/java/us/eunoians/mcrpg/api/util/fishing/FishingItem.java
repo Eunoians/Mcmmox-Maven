@@ -46,7 +46,6 @@ public class FishingItem {
       for(String filter : getFishingLootConfig().getConfigurationSection(tempKey).getKeys(false)){
       
         String subKey = tempKey + "." + filter + ".";
-        System.out.println(subKey);
         double chance = getFishingLootConfig().getDouble(subKey + "Chance", 0.0);
         String[] filterInfo = getFishingLootConfig().getString(subKey + "Filter").split(":");
         
