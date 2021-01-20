@@ -5,6 +5,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 import us.eunoians.mcrpg.api.BleedManager;
+import us.eunoians.mcrpg.gui.GUIHandler;
 import us.eunoians.mcrpg.player.PlayerContainer;
 import us.eunoians.mcrpg.skill.SkillRegistry;
 import us.eunoians.mcrpg.skill.impl.Swords;
@@ -35,6 +36,12 @@ public class McRPG extends JavaPlugin {
      */
     private BleedManager bleedManager;
 
+
+    /**
+     * The central {@link GUIHandler} that handles all GUI related stuff for {@link McRPG}.
+     */
+    private GUIHandler guiHandler;
+
     /**
      * Constructor used for unit tests.
      */
@@ -56,6 +63,7 @@ public class McRPG extends JavaPlugin {
         this.playerContainer = new PlayerContainer();
         this.skillRegistry = new SkillRegistry();
         this.bleedManager = new BleedManager();
+        this.guiHandler = new GUIHandler();
 
         // TODO: Move this to an appropriate place
         // Register skills
@@ -122,5 +130,13 @@ public class McRPG extends JavaPlugin {
      */
     public BleedManager getBleedManager(){
         return bleedManager;
+    }
+
+    /**
+     * Gets the {@link B}
+     * @return
+     */
+    public GUIHandler getGuiHandler() {
+        return guiHandler;
     }
 }
