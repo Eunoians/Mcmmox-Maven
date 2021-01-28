@@ -181,7 +181,7 @@ public class EditLoadoutGUI extends GUI{
           config.getInt(path + "Amount"));
 
         if(abilityItem.getItemMeta() == null){
-          Bukkit.getLogger().log(Level.SEVERE, "Ability item for: " + ability.getGenericAbility().getAbilityType().getName() + " has an air item");
+          Bukkit.getLogger().log(Level.SEVERE, "Ability item for: " + ability.getGenericAbility().getAbilityType().getName() + " has an air item. \nDetailed info: " + abilityItem.toString() );
           abilityItem.setType(Material.STONE);
         }
 
