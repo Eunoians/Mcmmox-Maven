@@ -177,7 +177,7 @@ public class EditLoadoutGUI extends GUI{
         
         FileConfiguration config = McRPG.getInstance().getFileManager().getFile(FileManager.Files.fromString(ability.getGenericAbility().getSkill().getName()));
         String path = ability.getGenericAbility().getName() + "Config.Item.";
-        ItemStack abilityItem = new ItemStack(Material.getMaterial(config.getString(path + "Material")),
+        ItemStack abilityItem = new ItemStack(Material.getMaterial(config.getString(path + "Material", "STONE")),
           config.getInt(path + "Amount"));
         ItemMeta abilityMeta = abilityItem.getItemMeta();
         String tier = "Tier" + Methods.convertToNumeral(ability.getCurrentTier());
