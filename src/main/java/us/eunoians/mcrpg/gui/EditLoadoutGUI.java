@@ -177,8 +177,14 @@ public class EditLoadoutGUI extends GUI{
         
         FileConfiguration config = McRPG.getInstance().getFileManager().getFile(FileManager.Files.fromString(ability.getGenericAbility().getSkill().getName()));
         String path = ability.getGenericAbility().getName() + "Config.Item.";
-        ItemStack abilityItem = new ItemStack(Material.getMaterial(config.getString(path + "Material", "STONE")),
+        ItemStack abilityItem = new ItemStack(Material.getMaterial(config.getString(path + "Material")),
           config.getInt(path + "Amount"));
+
+        if(abilityItem.getItemMeta() == null){
+          Bukkit.getLogger().log(Level.SEVERE, "Ability item for: " + ability.getGenericAbility().getAbilityType().getName() + " has an air item");
+          abilityItem.setType(Material.STONE);
+        }
+
         ItemMeta abilityMeta = abilityItem.getItemMeta();
         String tier = "Tier" + Methods.convertToNumeral(ability.getCurrentTier());
         abilityMeta.setDisplayName(Methods.color(player.getPlayer(), config.getString(path + "DisplayName") + " " + tier));
