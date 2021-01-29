@@ -188,10 +188,9 @@ public class EditLoadoutGUI extends GUI{
         ItemMeta abilityMeta = abilityItem.getItemMeta();
         String tier = "Tier" + Methods.convertToNumeral(ability.getCurrentTier());
         abilityMeta.setDisplayName(Methods.color(player.getPlayer(), config.getString(path + "DisplayName") + " " + tier));
-        abilityMeta.setLore(Methods.colorLore(config.getStringList(path + "Lore")));
         abilityMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         List<String> newLore = new ArrayList<>();
-        for(String s : abilityMeta.getLore()){
+        for(String s : Methods.colorLore(config.getStringList(path + "Lore"))){
           for(String value : config.getConfigurationSection(ability.getGenericAbility().getName() + "Config." + tier).getKeys(false)){
             s = s.replace("%" + value + "%", config.getString(ability.getGenericAbility().getName() + "Config." + tier + "." + value));
           }
