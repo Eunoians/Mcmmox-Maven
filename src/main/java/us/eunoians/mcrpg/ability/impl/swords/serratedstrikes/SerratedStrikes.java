@@ -42,6 +42,9 @@ import java.util.Set;
 public class SerratedStrikes extends ConfigurableBaseActiveAbility {
 
     public final static String METADATA_KEY = "serrated_strikes_modifier";
+
+    private final static String DURATION_KEY = "duration";
+    private final static String ACTIVATION_BOOST_KEY = "activation-boost";
     private final static Set<Material> ACTIVATION_MATERIALS = new HashSet<>();
 
     static {
@@ -98,8 +101,8 @@ public class SerratedStrikes extends ConfigurableBaseActiveAbility {
             return;
         }
 
-        int duration = configurationSection.getInt("duration", 5);
-        double activationBoost = configurationSection.getDouble("activation-boost", 5d);
+        int duration = configurationSection.getInt(DURATION_KEY, 5);
+        double activationBoost = configurationSection.getDouble(ACTIVATION_BOOST_KEY, 5d);
 
         SerratedStrikesActivateEvent serratedStrikesActivateEvent = new SerratedStrikesActivateEvent(getAbilityHolder(), this, getCooldownDuration(), activationBoost, duration);
         Bukkit.getPluginManager().callEvent(serratedStrikesActivateEvent);

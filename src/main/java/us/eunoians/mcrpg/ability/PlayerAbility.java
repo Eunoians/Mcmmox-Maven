@@ -12,7 +12,7 @@ import us.eunoians.mcrpg.player.McRPGPlayer;
  *
  * @author DiamondDagger590
  */
-public interface PlayerAbility {
+public interface PlayerAbility extends Ability{
 
     /**
      * Gets the {@link McRPGPlayer} that this {@link Ability} belongs to.
@@ -20,5 +20,7 @@ public interface PlayerAbility {
      * @return The {@link McRPGPlayer} that this {@link Ability} belongs to
      */
     @NotNull
-    public McRPGPlayer getPlayer();
+    public default McRPGPlayer getPlayer(){
+        return (McRPGPlayer) getAbilityHolder();
+    }
 }

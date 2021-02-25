@@ -51,6 +51,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class RageSpike extends ConfigurableBaseActiveAbility implements ReadyableAbility, ActiveAbility, PlayerAbility{
 
+    private final static String CHARGE_TIME_KEY = "charge-time";
+    private final static String DAMAGE_KEY = "damage";
     private final static Set<Material> ACTIVATION_MATERIALS = new HashSet<>();
 
     static {
@@ -110,7 +112,8 @@ public class RageSpike extends ConfigurableBaseActiveAbility implements Readyabl
             return;
         }
 
-        double chargeSeconds = configurationSection.getDouble("charge-time", 2.5);
+        double chargeSeconds = configurationSection.getDouble(CHARGE_TIME_KEY, 2.5);
+        double damage = configurationSection.getDouble(DAMAGE_KEY, 1.0);
         Player player = Bukkit.getPlayer(getPlayer().getUniqueId());
 
         RageSpikeBeginChargeEvent rageSpikeBeginChargeEvent = new RageSpikeBeginChargeEvent(getAbilityHolder(), this, chargeSeconds);
@@ -131,7 +134,7 @@ public class RageSpike extends ConfigurableBaseActiveAbility implements Readyabl
                     //We don't know that the player is online at this point so we need to validate this
                     if (player != null && player.isOnline()) {
 
-                        RageSpikeLaunchEvent rageSpikeLaunchEvent = new RageSpikeLaunchEvent(getAbilityHolder(), rageSpikeReference, 5.0, 2, 2, -4.3, getCooldownDuration()); //TODO make configurable
+                        RageSpikeLaunchEvent rageSpikeLaunchEvent = new RageSpikeLaunchEvent(getAbilityHolder(), rageSpikeReference, 5.0, damage, 2, -4.3, getCooldownDuration());
                         Bukkit.getPluginManager().callEvent(rageSpikeLaunchEvent);
 
                         if (!rageSpikeLaunchEvent.isCancelled()) {

@@ -8,12 +8,12 @@ import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 import us.eunoians.mcrpg.McRPG;
 import us.eunoians.mcrpg.ability.Ability;
+import us.eunoians.mcrpg.ability.ActivatableChanceAbility;
 import us.eunoians.mcrpg.ability.ConfigurableAbility;
 import us.eunoians.mcrpg.ability.configurable.ConfigurableBaseAbility;
 import us.eunoians.mcrpg.ability.creation.AbilityCreationData;
 import us.eunoians.mcrpg.annotation.AbilityIdentifier;
 import us.eunoians.mcrpg.api.AbilityHolder;
-import us.eunoians.mcrpg.api.Methods;
 import us.eunoians.mcrpg.api.error.AbilityConfigurationNotFoundException;
 import us.eunoians.mcrpg.api.event.ability.swords.BleedActivateEvent;
 import us.eunoians.mcrpg.api.event.ability.swords.BleedPlusActivateEvent;
@@ -28,7 +28,10 @@ import java.util.List;
  * @author DiamondDagger590
  */
 @AbilityIdentifier(id = "bleed_plus", abilityCreationData = BleedPlusCreationData.class)
-public class BleedPlus extends ConfigurableBaseAbility {
+public class BleedPlus extends ConfigurableBaseAbility implements ActivatableChanceAbility {
+
+    private static final String ACTIVATION_CHANCE_KEY = "activation-chance";
+    private static final String DAMAGE_BOOST_KEY = "damage-boost";
 
     /**
      * This assumes that the required extension of {@link AbilityCreationData}. Implementations of this will need
@@ -79,17 +82,13 @@ public class BleedPlus extends ConfigurableBaseAbility {
                 return;
             }
 
-            double activationChance = configurationSection.getDouble("activation-chance");
+            int damagePerCycle = configurationSection.getInt(DAMAGE_BOOST_KEY, 3);
 
-            if (Methods.calculateChance(activationChance)) {
-                int damagePerCycle = configurationSection.getInt("damage-boost", 3);
+            BleedPlusActivateEvent bleedPlusActivateEvent = new BleedPlusActivateEvent(bleedActivateEvent.getAbilityHolder(), this, bleedActivateEvent.getDamagePerCycle() + damagePerCycle, bleedActivateEvent);
+            Bukkit.getPluginManager().callEvent(bleedPlusActivateEvent);
 
-                BleedPlusActivateEvent bleedPlusActivateEvent = new BleedPlusActivateEvent(bleedActivateEvent.getAbilityHolder(), this, bleedActivateEvent.getDamagePerCycle() + damagePerCycle, bleedActivateEvent);
-                Bukkit.getPluginManager().callEvent(bleedPlusActivateEvent);
-
-                if (!bleedPlusActivateEvent.isCancelled()) {
-                    bleedActivateEvent.setDamagePerCycle(bleedPlusActivateEvent.getDamagePerCycle());
-                }
+            if (!bleedPlusActivateEvent.isCancelled()) {
+                bleedActivateEvent.setDamagePerCycle(bleedPlusActivateEvent.getDamagePerCycle());
             }
         }
     }
@@ -130,5 +129,29 @@ public class BleedPlus extends ConfigurableBaseAbility {
             throw new AbilityConfigurationNotFoundException("Configuration section known as: 'bleed-plus-config' is missing from the " + FileManager.Files.SWORDS_CONFIG.getFileName() + " file.", getAbilityID());
         }
         return configurationSection;
+    }
+
+    /**
+     * Gets the chance for this {@link ActivatableChanceAbility} to activate whenever
+     * an "activatable action" is performed.
+     * <p>
+     * ie) Breaking an ore with double drop
+     *
+     * @return A positive zero inclusive chance for this {@link ActivatableChanceAbility} to activate.
+     */
+    @Override
+    public double getActivationChance() {
+        ConfigurationSection configurationSection;
+
+        try {
+            configurationSection = getSpecificTierSection(getTier());
+        } catch (AbilityConfigurationNotFoundException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+        double activationChance = configurationSection.getDouble(ACTIVATION_CHANCE_KEY);
+
+        return Math.max(0d, activationChance);
     }
 }

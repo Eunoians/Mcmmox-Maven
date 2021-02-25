@@ -8,12 +8,12 @@ import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 import us.eunoians.mcrpg.McRPG;
 import us.eunoians.mcrpg.ability.Ability;
+import us.eunoians.mcrpg.ability.ActivatableChanceAbility;
 import us.eunoians.mcrpg.ability.ConfigurableAbility;
 import us.eunoians.mcrpg.ability.configurable.ConfigurableBaseAbility;
 import us.eunoians.mcrpg.ability.creation.AbilityCreationData;
 import us.eunoians.mcrpg.annotation.AbilityIdentifier;
 import us.eunoians.mcrpg.api.AbilityHolder;
-import us.eunoians.mcrpg.api.Methods;
 import us.eunoians.mcrpg.api.error.AbilityConfigurationNotFoundException;
 import us.eunoians.mcrpg.api.event.ability.swords.BleedActivateEvent;
 import us.eunoians.mcrpg.api.event.ability.swords.VampireActivateEvent;
@@ -28,7 +28,10 @@ import java.util.List;
  * @author DiamondDagger590
  */
 @AbilityIdentifier(id = "vampire", abilityCreationData = VampireCreationData.class)
-public class Vampire extends ConfigurableBaseAbility {
+public class Vampire extends ConfigurableBaseAbility implements ActivatableChanceAbility {
+
+    private static final String ACTIVATION_CHANCE_KEY = "activation-chance";
+    private static final String AMOUNT_TO_HEAL_KEY = "amount-to-heal";
 
     /**
      * This assumes that the required extension of {@link AbilityCreationData}. Implementations of this will need
@@ -79,17 +82,13 @@ public class Vampire extends ConfigurableBaseAbility {
                 return;
             }
 
-            double activationChance = configurationSection.getDouble("activation-chance");
+            int amountToHeal = configurationSection.getInt(AMOUNT_TO_HEAL_KEY, 3);
 
-            if (Methods.calculateChance(activationChance)) {
-                int amountToHeal = configurationSection.getInt("amount-to-heal", 3);
+            VampireActivateEvent vampireActivateEvent = new VampireActivateEvent(bleedActivateEvent.getAbilityHolder(), this, amountToHeal, bleedActivateEvent);
+            Bukkit.getPluginManager().callEvent(vampireActivateEvent);
 
-                VampireActivateEvent vampireActivateEvent = new VampireActivateEvent(bleedActivateEvent.getAbilityHolder(), this, amountToHeal, bleedActivateEvent);
-                Bukkit.getPluginManager().callEvent(vampireActivateEvent);
-
-                if (!vampireActivateEvent.isCancelled()) {
-                    bleedActivateEvent.setHealthToRestore(vampireActivateEvent.getAmountToHeal());
-                }
+            if (!vampireActivateEvent.isCancelled()) {
+                bleedActivateEvent.setHealthToRestore(vampireActivateEvent.getAmountToHeal());
             }
         }
     }
@@ -130,5 +129,29 @@ public class Vampire extends ConfigurableBaseAbility {
             throw new AbilityConfigurationNotFoundException("Configuration section known as: 'vampire-config' is missing from the " + FileManager.Files.SWORDS_CONFIG.getFileName() + " file.", getAbilityID());
         }
         return configurationSection;
+    }
+
+    /**
+     * Gets the chance for this {@link ActivatableChanceAbility} to activate whenever
+     * an "activatable action" is performed.
+     * <p>
+     * ie) Breaking an ore with double drop
+     *
+     * @return A positive zero inclusive chance for this {@link ActivatableChanceAbility} to activate.
+     */
+    @Override
+    public double getActivationChance() {
+        ConfigurationSection configurationSection;
+
+        try {
+            configurationSection = getSpecificTierSection(getTier());
+        } catch (AbilityConfigurationNotFoundException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+        double activationChance = configurationSection.getDouble(ACTIVATION_CHANCE_KEY);
+
+        return Math.max(0d, activationChance);
     }
 }

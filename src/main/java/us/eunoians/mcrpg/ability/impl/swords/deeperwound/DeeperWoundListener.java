@@ -22,11 +22,11 @@ public class DeeperWoundListener implements Listener {
         AbilityHolder abilityHolder = bleedActivateEvent.getAbilityHolder();
 
         NamespacedKey id = Ability.getId(DeeperWound.class);
-        if (abilityHolder instanceof McRPGPlayer ? abilityHolder.getLoadout().contains(bleedActivateEvent.getAbility()) : abilityHolder.hasAbility(id)) {
+        DeeperWound deeperWound = (DeeperWound) abilityHolder.getAbility(id);
 
-            DeeperWound deeperWound = (DeeperWound) abilityHolder.getAbility(id);
+        if (abilityHolder instanceof McRPGPlayer ? abilityHolder.getLoadout().contains(deeperWound) : abilityHolder.hasAbility(id)) {
 
-            if(deeperWound.isToggled()) {
+            if(deeperWound.isToggled() && deeperWound.tryActivationChance()) {
                 deeperWound.activate(abilityHolder, bleedActivateEvent);
             }
         }

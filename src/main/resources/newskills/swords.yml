@@ -337,24 +337,24 @@ rage-spike-config:
     #How long the ability takes to charge
     charge-time: 2.5
     #Damage dealt via collision
-    damage: 1
+    damage: 1.0
     #Cooldown in seconds
     cooldown: 140
   tier-II:
     charge-time: 2.3
-    damage: 1
+    damage: 1.5
     cooldown: 140
   tier-III:
     charge-time: 2.0
-    damage: 2
+    damage: 2.5
     cooldown: 140
   tier-IV:
     charge-time: 1.5
-    damage: 3
+    damage: 3.5
     cooldown: 140
   tier-V:
     charge-time: 1.0
-    damage: 3
+    damage: 5.0
     cooldown: 140
   #How this ability should be seen in the GUIS
   Item:

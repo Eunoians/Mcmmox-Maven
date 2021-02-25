@@ -9,12 +9,12 @@ import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 import us.eunoians.mcrpg.McRPG;
 import us.eunoians.mcrpg.ability.Ability;
+import us.eunoians.mcrpg.ability.ActivatableChanceAbility;
 import us.eunoians.mcrpg.ability.ConfigurableAbility;
 import us.eunoians.mcrpg.ability.configurable.ConfigurableBaseAbility;
 import us.eunoians.mcrpg.ability.creation.AbilityCreationData;
 import us.eunoians.mcrpg.annotation.AbilityIdentifier;
 import us.eunoians.mcrpg.api.AbilityHolder;
-import us.eunoians.mcrpg.api.Methods;
 import us.eunoians.mcrpg.api.error.AbilityConfigurationNotFoundException;
 import us.eunoians.mcrpg.api.event.ability.swords.BleedActivateEvent;
 import us.eunoians.mcrpg.api.event.ability.swords.DeeperWoundActivateEvent;
@@ -29,7 +29,10 @@ import java.util.List;
  * @author DiamondDagger590
  */
 @AbilityIdentifier(id = "deeper_wound", abilityCreationData = DeeperWoundCreationData.class)
-public class DeeperWound extends ConfigurableBaseAbility {
+public class DeeperWound extends ConfigurableBaseAbility implements ActivatableChanceAbility {
+
+    private static final String ACTIVATION_CHANCE_KEY = "activation-chance";
+    private static final String EXTRA_CYCLES_KEY = "extra-cycles";
 
     /**
      * This assumes that the required extension of {@link AbilityCreationData}. Implementations of this will need
@@ -90,17 +93,13 @@ public class DeeperWound extends ConfigurableBaseAbility {
                 return;
             }
 
-            double activationChance = configurationSection.getDouble("activation-chance");
+            int extraCycles = configurationSection.getInt(EXTRA_CYCLES_KEY, 3);
 
-            if (Methods.calculateChance(activationChance)) {
-                int extraCycles = configurationSection.getInt("extra-cycles", 3);
+            DeeperWoundActivateEvent deeperWoundActivateEvent = new DeeperWoundActivateEvent(bleedActivateEvent.getAbilityHolder(), this, bleedActivateEvent.getAmountOfCycles() + extraCycles, bleedActivateEvent);
+            Bukkit.getPluginManager().callEvent(deeperWoundActivateEvent);
 
-                DeeperWoundActivateEvent deeperWoundActivateEvent = new DeeperWoundActivateEvent(bleedActivateEvent.getAbilityHolder(), this, bleedActivateEvent.getAmountOfCycles() + extraCycles, bleedActivateEvent);
-                Bukkit.getPluginManager().callEvent(deeperWoundActivateEvent);
-
-                if (!deeperWoundActivateEvent.isCancelled()) {
-                    bleedActivateEvent.setAmountOfCycles(deeperWoundActivateEvent.getAmountOfCyclesToSet());
-                }
+            if (!deeperWoundActivateEvent.isCancelled()) {
+                bleedActivateEvent.setAmountOfCycles(deeperWoundActivateEvent.getAmountOfCyclesToSet());
             }
         }
     }
@@ -141,5 +140,29 @@ public class DeeperWound extends ConfigurableBaseAbility {
             throw new AbilityConfigurationNotFoundException("Configuration section known as: 'deeper-wound-config' is missing from the " + FileManager.Files.SWORDS_CONFIG.getFileName() + " file.", getAbilityID());
         }
         return configurationSection;
+    }
+
+    /**
+     * Gets the chance for this {@link ActivatableChanceAbility} to activate whenever
+     * an "activatable action" is performed.
+     * <p>
+     * ie) Breaking an ore with double drop
+     *
+     * @return A positive zero inclusive chance for this {@link ActivatableChanceAbility} to activate.
+     */
+    @Override
+    public double getActivationChance() {
+        ConfigurationSection configurationSection;
+
+        try {
+            configurationSection = getSpecificTierSection(getTier());
+        } catch (AbilityConfigurationNotFoundException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+        double activationChance = configurationSection.getDouble(ACTIVATION_CHANCE_KEY);
+
+        return Math.max(0d, activationChance);
     }
 }

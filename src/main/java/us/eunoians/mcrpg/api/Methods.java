@@ -496,10 +496,11 @@ public class Methods {
 
     /**
      * Updates the internal cache of powers of 10 and returns 10^degree
+     *
      * @param degree The degree to get from the cache or if not present, store then get from cache
      * @return 10^degree
      */
-    private static int getAndUpdateTensPowerCache(int degree){
+    private static int getAndUpdateTensPowerCache(int degree) {
 
         if (!POWER_OF_TEN_CACHE.containsKey(degree)) {
             POWER_OF_TEN_CACHE.put(degree, (int) Math.pow(10, degree));

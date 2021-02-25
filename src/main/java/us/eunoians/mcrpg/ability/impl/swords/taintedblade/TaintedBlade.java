@@ -40,6 +40,10 @@ import java.util.Set;
 @AbilityIdentifier(id = "tainted_blade", abilityCreationData = TaintedBladeCreationData.class)
 public class TaintedBlade extends ConfigurableBaseActiveAbility implements PotionEffectableAbility {
 
+    private final static String STRENGTH_DURATION_KEY = "strength-duration";
+    private final static String RESISTANCE_DURATION_KEY = "resistance-duration";
+    private final static String SPEED_DURATION_KEY = "speed-duration";
+    private final static String HUNGER_DURATION_KEY = "hunger-duration";
     private final static Set<Material> ACTIVATION_MATERIALS = new HashSet<>();
 
     static {
@@ -135,10 +139,10 @@ public class TaintedBlade extends ConfigurableBaseActiveAbility implements Potio
 
         Set<PotionEffect> effects = new HashSet<>();
 
-        effects.add(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, configurationSection.getInt("strength-duration", 3), 1));
-        effects.add(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, configurationSection.getInt("resistance-duration", 3), 1));
-        effects.add(new PotionEffect(PotionEffectType.SPEED, configurationSection.getInt("speed-duration", 3), 2));
-        effects.add(new PotionEffect(PotionEffectType.HUNGER, configurationSection.getInt("hunger-duration", 3), 1));
+        effects.add(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, configurationSection.getInt(STRENGTH_DURATION_KEY, 3), 1));
+        effects.add(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, configurationSection.getInt(RESISTANCE_DURATION_KEY, 3), 1));
+        effects.add(new PotionEffect(PotionEffectType.SPEED, configurationSection.getInt(SPEED_DURATION_KEY, 3), 2));
+        effects.add(new PotionEffect(PotionEffectType.HUNGER, configurationSection.getInt(HUNGER_DURATION_KEY, 3), 1));
 
         return effects;
     }

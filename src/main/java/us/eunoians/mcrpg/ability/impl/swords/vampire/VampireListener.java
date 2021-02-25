@@ -26,7 +26,7 @@ public class VampireListener implements Listener {
 
             Vampire vampire = (Vampire) abilityHolder.getAbility(id);
 
-            if(vampire.isToggled()) {
+            if(vampire.isToggled() && vampire.tryActivationChance()) {
                 vampire.activate(abilityHolder, bleedActivateEvent);
             }
         }

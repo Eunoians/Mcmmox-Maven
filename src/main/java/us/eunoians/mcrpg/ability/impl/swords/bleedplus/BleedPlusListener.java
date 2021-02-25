@@ -26,7 +26,7 @@ public class BleedPlusListener implements Listener {
 
             BleedPlus bleedPlus = (BleedPlus) abilityHolder.getAbility(id);
 
-            if(bleedPlus.isToggled()) {
+            if(bleedPlus.isToggled() && bleedPlus.tryActivationChance()) {
                 bleedPlus.activate(abilityHolder, bleedActivateEvent);
             }
         }
