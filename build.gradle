@@ -21,7 +21,6 @@ repositories {
     maven { url 'https://repo.aikar.co/content/groups/aikar/' }
     maven { url 'https://jitpack.io' }
     maven { url 'http://repo.extendedclip.com/content/repositories/placeholderapi/' }
-    maven { url 'https://nexus.articdive.de/repository/maven-public/' }
     maven { url 'http://maven.sk89q.com/repo/' }
     maven { url 'https://nexus.wesjd.net/repository/thirdparty/' }
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
@@ -40,6 +39,9 @@ dependencies {
     //compile 'com.github.CyR1en:McUtils:1.6.11'
     compile group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.26'
 
+    compile group: 'com.zaxxer', name: 'HikariCP', version: '2.3.2'
+
+
     compileOnly 'fr.neatmonster:nocheatplus:3.16.1-SNAPSHOT'
     compileOnly 'com.github.DiamondDagger590:FlatDB:1.0.7'
     compileOnly 'com.github.DiamondDagger590:EnumToYaml:1.0'
@@ -49,15 +51,18 @@ dependencies {
     compileOnly 'com.sk89q.worldguard:worldguard-core:7.0.0-SNAPSHOT'
     compileOnly 'com.sk89q.worldguard:worldguard-legacy:7.0.0-SNAPSHOT'
     compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
-    compile 'org.bstats:bstats-bukkit:1.7'
     compileOnly files('libs/Sickle.jar')
     compileOnly files('libs/SpartanAPI.jar')
     compileOnly files('libs/mcMMO.jar')
 
-    implementation 'com.lunarclient:bukkitapi:1.0-20200729.212152-7'
+    implementation 'com.lunarclient:bukkitapi:+'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile 'com.github.DiamondDagger590:EnumToYaml:1.0'
+    testCompile 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
     testImplementation 'com.github.seeseemelk:MockBukkit-v1.16:0.5.0'
+
+
 }
 
 processResources {

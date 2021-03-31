@@ -25,6 +25,7 @@ import us.eunoians.mcrpg.api.lunar.LunarClientHook;
 import us.eunoians.mcrpg.api.manager.BleedManager;
 import us.eunoians.mcrpg.api.manager.CooldownManager;
 import us.eunoians.mcrpg.api.manager.ReadyTaskManager;
+import us.eunoians.mcrpg.database.BaseDatabase;
 import us.eunoians.mcrpg.player.PlayerContainer;
 import us.eunoians.mcrpg.skill.SkillRegistry;
 import us.eunoians.mcrpg.skill.impl.Swords;
@@ -122,6 +123,8 @@ public class McRPG extends JavaPlugin {
         fileManager.setup(this);
 
         placeStore = ChunkManagerFactory.getChunkManager();
+
+        BaseDatabase.init(this);
 
         this.playerContainer = new PlayerContainer();
         this.abilityRegistry = new AbilityRegistry();
