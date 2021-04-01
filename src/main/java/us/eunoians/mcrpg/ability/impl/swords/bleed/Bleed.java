@@ -31,7 +31,7 @@ import java.util.List;
 public class Bleed extends BaseAbility implements DefaultAbility, ToggleableAbility, ConfigurableEnableableAbility,
         ConfigurableAbilityDisplayItem {
 
-    private static final String BLEED_CHANCE_EQUATION_KEY = "bleed-chance-activation";
+    private static final String BLEED_CHANCE_EQUATION_KEY = "bleed-chance-activation-equation";
     private static final String BLEED_FREQUENCY_KEY = "frequency";
     private static final String BLEED_FREQUENCY_TICKS_KEY = "frequency-ticks";
     private static final String BLEED_CYCLES_KEY = "cycles";

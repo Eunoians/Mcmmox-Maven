@@ -50,7 +50,7 @@ public class McRPG extends JavaPlugin {
     private static ChunkManager placeStore;
 
     /**
-     * The player container, this object holds all the McRPG playesr
+     * The player container, this object holds all the McRPG players
      */
     private PlayerContainer playerContainer;
 

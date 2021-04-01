@@ -21,7 +21,6 @@ repositories {
     maven { url 'https://repo.aikar.co/content/groups/aikar/' }
     maven { url 'https://jitpack.io' }
     maven { url 'http://repo.extendedclip.com/content/repositories/placeholderapi/' }
-    maven { url 'https://nexus.articdive.de/repository/maven-public/' }
     maven { url 'http://maven.sk89q.com/repo/' }
     maven { url 'https://nexus.wesjd.net/repository/thirdparty/' }
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
@@ -54,7 +53,7 @@ dependencies {
     compileOnly files('libs/SpartanAPI.jar')
     compileOnly files('libs/mcMMO.jar')
 
-    implementation 'com.lunarclient:bukkitapi:1.0-20200729.212152-7'
+    implementation 'com.lunarclient:bukkitapi:+'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testImplementation 'com.github.seeseemelk:MockBukkit-v1.16:0.5.0'

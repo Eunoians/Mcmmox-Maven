@@ -346,6 +346,7 @@ public class FileManager {
         //TODO move all configs to use new system
         //Reworked configs
         SWORDS_CONFIG("swords.yml", "skills/swords.yml"),
+        MINING_CONFIG("mining.yml", "skills/mining.yml"),
 
         //Old configs
         ABILITY_OVERRIDE_GUI("abilityoverridegui.yml", "guis/abilityoverridegui.yml"),
@@ -372,7 +373,6 @@ public class FileManager {
         LEVEL_COMMAND("level_commands.yml", "level_commands.yml"),
         LOCATIONS("locations.yml", "data/locations.yml"),
         MAIN_GUI("maingui.yml", "guis/maingui.yml"),
-        MINING_CONFIG("mining.yml", "skills/mining.yml"),
         PARTY_CONFIG("party_config.yml", "party_config.yml"),
         PARTY_MAIN_GUI("partymastergui.yml", "guis/parties/partymastergui.yml"),
         PARTY_MEMBER_GUI("partymembergui.yml", "guis/parties/partymembergui.yml"),

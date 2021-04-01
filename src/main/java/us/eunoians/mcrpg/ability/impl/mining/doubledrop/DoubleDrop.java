@@ -44,7 +44,7 @@ import java.util.UUID;
 public class DoubleDrop extends BaseAbility implements DefaultAbility, ToggleableAbility, ConfigurableEnableableAbility,
         ConfigurableAbilityDisplayItem, PlayerAbility {
 
-    private final static String DOUBLE_DROP_CHANCE_EQUATION_KEY = "double-drop-chance-activation";
+    private final static String DOUBLE_DROP_CHANCE_EQUATION_KEY = "double-drop-chance-activation-equation";
     public final static Set<Material> BLOCKS_TO_DOUBLE = new HashSet<>();
 
     static {
