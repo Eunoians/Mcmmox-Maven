@@ -30,15 +30,14 @@ import us.eunoians.mcrpg.util.parser.Parser;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * This ability has a chance that scales with the mining level to double the drops of a blocks
+ *
+ * @author DiamondDagger590
  */
 @AbilityIdentifier(id = "double_drop", abilityCreationData = DoubleDropCreationData.class)
 public class DoubleDrop extends BaseAbility implements DefaultAbility, ToggleableAbility, ConfigurableEnableableAbility,
@@ -97,14 +96,7 @@ public class DoubleDrop extends BaseAbility implements DefaultAbility, Toggleabl
             List<Item> itemsToDrop = blockDropItemEvent.getItems();
             Block block = blockDropItemEvent.getBlock();
 
-            Map<UUID, ItemStack> itemStacksToDrop = new HashMap<>();
-
-            for(Item item : itemsToDrop){
-
-                ItemStack itemStack = item.getItemStack();
-                itemStack.setAmount(itemStack.getAmount() * 2);
-                itemStacksToDrop.put(item.getUniqueId(), itemStack);
-            }
+            Set<Item> itemStacksToDrop = new HashSet<>(itemsToDrop);
 
             DoubleDropActivateEvent doubleDropActivateEvent = new DoubleDropActivateEvent(getAbilityHolder(), this, itemStacksToDrop, block);
             Bukkit.getPluginManager().callEvent(doubleDropActivateEvent);
@@ -113,12 +105,13 @@ public class DoubleDrop extends BaseAbility implements DefaultAbility, Toggleabl
 
                 List<Item> newItemsToDrop = new ArrayList<>();
 
-                for(Item item : itemsToDrop){
+                for(Item item : doubleDropActivateEvent.getItemsToDrop()){
 
-                    if(doubleDropActivateEvent.getItemsToDrop().containsKey(item.getUniqueId())){
-                        item.setItemStack(doubleDropActivateEvent.getItemsToDrop().get(item.getUniqueId()));
-                        newItemsToDrop.add(item);
-                    }
+                    ItemStack itemStack = item.getItemStack();
+                    itemStack.setAmount(itemStack.getAmount() * doubleDropActivateEvent.getMultiplier());
+                    item.setItemStack(itemStack);
+
+                    newItemsToDrop.add(item);
                 }
 
                 blockDropItemEvent.getItems().clear();

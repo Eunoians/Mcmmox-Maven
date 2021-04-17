@@ -253,37 +253,37 @@ RemoteTransferConfig:
 # Config for the ability Its A Triple
 # This passive ability has a chance at tripling the drops from ores instead of doubling
 #
-ItsATripleConfig:
+its-a-triple-config:
   #How many tiers there should be. Highly recommended to keep at 5.
-  TierAmount: 5
+  tier-amount: 5
   #At what level should each tier become available. Tier I is the unlock level
-  TierUpgrade:
-    TierII: 400
-    TierIII: 550
-    TierIV: 700
-    TierV: 850
+  tier-upgrade:
+    tier-II: 400
+    tier-III: 550
+    tier-IV: 700
+    tier-V: 850
   #Config for each tier
-  TierI:
+  tier-I:
     #Odds of activation per tier
-    ActivationChance: 3.0
-  TierII:
-    ActivationChance: 4.0
-  TierIII:
-    ActivationChance: 5.0
-  TierIV:
-    ActivationChance: 7.5
-  TierV:
-    ActivationChance: 10.0
+    activation-chance: 3.0
+  tier-II:
+    activation-chance: 4.0
+  tier-III:
+    activation-chance: 5.0
+  tier-IV:
+    activation-chance: 7.5
+  tier-V:
+    activation-chance: 10.0
   #How this ability should be seen in the GUIS
-  Item:
-    DisplayName: '&3Its A Triple'
-    Material: DIAMOND
-    Amount: 3
+  display-item:
+    display-name: '&3Its A Triple'
+    material: DIAMOND
+    amount: 3
     #This lore is shown in most guis but will be ignored for certain hard coded lores for things like confirmation guis
-    PlayerLore:
+    player-lore:
       - '&bYou have a &e%ActivationChance%% &bchance'
       - '&bof tripling drops from natural ores.'
-    MenuLore:
+    menu-lore:
       - '&bThis ability can triple drops'
       - '&from natural ores'
       - '&aUnlock Level: &e%UnlockLevel%'

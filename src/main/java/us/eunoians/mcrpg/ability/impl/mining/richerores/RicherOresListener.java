@@ -11,6 +11,11 @@ import us.eunoians.mcrpg.api.Methods;
 import us.eunoians.mcrpg.api.event.ability.mining.DoubleDropPreActivateEvent;
 import us.eunoians.mcrpg.player.McRPGPlayer;
 
+/**
+ * This listener handles activation of {@link RicherOres}
+ *
+ * @author DiamondDagger590
+ */
 public class RicherOresListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -28,7 +33,5 @@ public class RicherOresListener implements Listener {
                 richerOres.activate(abilityHolder, doubleDropPreActivateEvent);
             }
         }
-
-
     }
 }
