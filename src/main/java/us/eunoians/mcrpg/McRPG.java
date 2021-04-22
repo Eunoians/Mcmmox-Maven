@@ -102,6 +102,11 @@ public class McRPG extends JavaPlugin {
     private boolean healthBarPluginEnabled = false;
 
     /**
+     * Whether this instance is being run in a unit test.
+     */
+    private boolean isUnitTest = false;
+
+    /**
      * Constructor used for unit tests.
      */
     public McRPG() {
@@ -113,18 +118,22 @@ public class McRPG extends JavaPlugin {
      */
     public McRPG(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
         super(loader, description, dataFolder, file);
+        this.isUnitTest = true;
     }
 
     @Override
     public void onEnable() {
         instance = this;
 
-        fileManager = FileManager.getInstance();
-        fileManager.setup(this);
+        if (!isUnitTest) {
+            fileManager = FileManager.getInstance();
+            fileManager.setup(this);
 
-        placeStore = ChunkManagerFactory.getChunkManager();
+            placeStore = ChunkManagerFactory.getChunkManager();
 
-        BaseDatabase.init(this);
+            BaseDatabase.init(this);
+        }
+
 
         this.playerContainer = new PlayerContainer();
         this.abilityRegistry = new AbilityRegistry();
@@ -142,12 +151,13 @@ public class McRPG extends JavaPlugin {
         initAbilities();
         initSkills();
         initListeners();
-
-
     }
 
     @Override
     public void onDisable() {
+        if(!isUnitTest) {
+            BaseDatabase.getInstance().close();
+        }
     }
 
     public String getPluginPrefix() {

@@ -28,6 +28,8 @@ import us.eunoians.mcrpg.ability.PlayerAbility;
 import us.eunoians.mcrpg.ability.ReadyableAbility;
 import us.eunoians.mcrpg.ability.configurable.ConfigurableBaseActiveAbility;
 import us.eunoians.mcrpg.ability.creation.AbilityCreationData;
+import us.eunoians.mcrpg.ability.impl.swords.deeperwound.DeeperWoundCreationData;
+import us.eunoians.mcrpg.annotation.AbilityIdentifier;
 import us.eunoians.mcrpg.api.AbilityHolder;
 import us.eunoians.mcrpg.api.error.AbilityConfigurationNotFoundException;
 import us.eunoians.mcrpg.api.event.ability.swords.ragespike.RageSpikeBeginChargeEvent;
@@ -49,6 +51,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @author DiamondDagger590
  */
+@AbilityIdentifier(id = "rage_spike", abilityCreationData = RageSpikeCreationData.class)
 public class RageSpike extends ConfigurableBaseActiveAbility implements ReadyableAbility, ActiveAbility, PlayerAbility{
 
     private final static Set<Material> ACTIVATION_MATERIALS = new HashSet<>();

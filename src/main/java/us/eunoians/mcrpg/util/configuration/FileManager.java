@@ -41,6 +41,8 @@ public class FileManager {
      */
     public FileManager setup(Plugin plugin) {
 
+        //TODO either replace or re-enable when testing comes
+        /*
         //Auto gen some configs
         EnumConfigurationBuilder config = new EnumConfigurationBuilder(new File(McRPG.getInstance().getDataFolder() + File.separator + "config.yml"), ConfigEnum.class);
         EnumConfigurationBuilder enConfig = new EnumConfigurationBuilder(new File(McRPG.getInstance().getDataFolder() + File.separator + "localization" + File.separator + "en.yml"), LangEnum.class);
@@ -52,7 +54,7 @@ public class FileManager {
 
         config.build();
         enConfig.build();
-        soundConfig.build();
+        soundConfig.build();*/
 
         prefix = "[" + plugin.getName() + "] ";
         this.plugin = plugin;

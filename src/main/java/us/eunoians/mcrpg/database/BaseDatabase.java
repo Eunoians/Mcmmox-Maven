@@ -2,12 +2,15 @@ package us.eunoians.mcrpg.database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import com.zaxxer.hikari.util.DriverDataSource;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jline.utils.Log;
 
+import javax.sql.DataSource;
 import javax.swing.text.html.Option;
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -15,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.Properties;
 
 
 /**
@@ -73,9 +77,22 @@ public class BaseDatabase {
         }
 
 
-        if (databaseType == DatabaseType.MYSQL) {
-            String path = new File(plugin.getDataFolder(), "mcrpg.db").getAbsolutePath();
-            instance.config.setJdbcUrl("jdbc:sqlite:" + path);
+        if (databaseType == DatabaseType.SQLITE) {
+            File file = new File(plugin.getDataFolder(), "mcrpg.db");
+
+            if (!file.exists()) {
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            DataSource dataSource = new DriverDataSource("jdbc:sqlite:" + file.getAbsolutePath(), "org.sqlite.JDBC", new Properties(), null, null);
+            instance.config.setDataSource(dataSource);
+            instance.config.setPoolName("SQLiteConnectionPool");
+            instance.config.setDataSourceClassName("org.sqlite.SQLiteDataSource");
+
 
             plugin.getLogger().info("Initialising database connection to sqlite database...");
         }
@@ -99,7 +116,6 @@ public class BaseDatabase {
         // Set time-out to 10 seconds
         instance.config.setConnectionTimeout(10000);
         instance.config.setMaximumPoolSize(6);
-
 
         // Create database
         instance.connect();
@@ -137,7 +153,7 @@ public class BaseDatabase {
         dataSource.close();
     }
 
-    public static enum DatabaseType {
+    public enum DatabaseType {
         SQLITE, MYSQL;
 
 
