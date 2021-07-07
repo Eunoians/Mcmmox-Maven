@@ -33,7 +33,7 @@ public class DoubleDropActivateEvent extends AbilityActivateEvent {
      * @param abilityHolder The {@link AbilityHolder} that is activating the event
      * @param ability       The {@link Ability} being activated
      */
-    public DoubleDropActivateEvent(@NotNull AbilityHolder abilityHolder, @NotNull DoubleDrop ability, @NotNull Set<Item> itemsToDrop, @NotNull Block block) {
+    public DoubleDropActivateEvent(@NotNull AbilityHolder abilityHolder, DoubleDrop ability, @NotNull Set<Item> itemsToDrop, @NotNull Block block) {
         super(abilityHolder, ability, AbilityEventType.RECREATIONAL);
         this.itemsToDrop = itemsToDrop;
         this.block = block;

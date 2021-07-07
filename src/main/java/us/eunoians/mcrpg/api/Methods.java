@@ -27,56 +27,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Methods {
 
-    private final static TreeMap<Integer, String> map = new TreeMap<Integer, String>();
-    private final static Map<Integer, Integer> POWER_OF_TEN_CACHE = new HashMap<>();
 
-    static {
-
-        map.put(1000, "M");
-        map.put(900, "CM");
-        map.put(500, "D");
-        map.put(400, "CD");
-        map.put(100, "C");
-        map.put(90, "XC");
-        map.put(50, "L");
-        map.put(40, "XL");
-        map.put(10, "X");
-        map.put(9, "IX");
-        map.put(5, "V");
-        map.put(4, "IV");
-        map.put(1, "I");
-
-    }
-
-    public static String convertToNumeral(int number) {
-        int l = map.floorKey(number);
-        if (number == l) {
-            return map.get(number);
-        }
-        return map.get(l) + convertToNumeral(number - l);
-    }
-
-
-    /**
-     * @param numeral The numeral to convert
-     * @return The integer representation of the numeral
-     */
-    public static int convertToNumber(String numeral) {
-        switch (numeral) {
-            case "I":
-                return 1;
-            case "II":
-                return 2;
-            case "III":
-                return 3;
-            case "IV":
-                return 4;
-            case "V":
-                return 5;
-            default:
-                return 0;
-        }
-    }
 
     /**
      * @param s String to test
