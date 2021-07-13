@@ -3,8 +3,10 @@ version: ${pluginVersion}
 author: Eunoians
 description: A RPG plugin for 1.13+
 main: us.eunoians.mcrpg.McRPG
-api-version: 1.13
+api-version: 1.17
 soft-depend: [PlaceholderAPI, WorldGuard, NoCheatPlus, mcMMO]
+libraries:
+  - com.google.guava:guava:30.1.1-jre
 commands:
   mcrpg:
     description: Opens the main menu for McRPG

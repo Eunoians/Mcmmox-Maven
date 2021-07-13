@@ -82,6 +82,9 @@ ExpAwardedPerMob:
   ZOGLIN: 30
   ZOMBIFIED_PIGLIN: 30
   PIGLIN_BRUTE: 50
+  AXOLOTL: 100
+  GOAT: 30
+  GLOW_SQUID: 75
 #What abilities are enabled
 EnabledAbilities:
   Bleed: true
