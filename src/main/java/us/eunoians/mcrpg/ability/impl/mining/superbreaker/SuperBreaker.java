@@ -16,7 +16,6 @@ import us.eunoians.mcrpg.ability.PlayerAbility;
 import us.eunoians.mcrpg.ability.ReadyableAbility;
 import us.eunoians.mcrpg.ability.configurable.ConfigurableBaseActiveAbility;
 import us.eunoians.mcrpg.ability.creation.AbilityCreationData;
-import us.eunoians.mcrpg.ability.impl.swords.ragespike.RageSpikeCreationData;
 import us.eunoians.mcrpg.annotation.AbilityIdentifier;
 import us.eunoians.mcrpg.api.AbilityHolder;
 import us.eunoians.mcrpg.api.error.AbilityConfigurationNotFoundException;
@@ -43,7 +42,7 @@ public class SuperBreaker extends ConfigurableBaseActiveAbility implements Ready
 
     static {
         for (Material material : Material.values()) {
-            if (material.toString().contains("_SWORD")) {
+            if (material.toString().contains("_PICKAXE")) {
                 ACTIVATION_MATERIALS.add(material);
             }
         }
@@ -53,14 +52,12 @@ public class SuperBreaker extends ConfigurableBaseActiveAbility implements Ready
      * {@inheritDoc}
      */
     public SuperBreaker(@NotNull AbilityCreationData abilityCreationData){
-
         super(abilityCreationData);
-        if (abilityCreationData instanceof RageSpikeCreationData) {
-            RageSpikeCreationData rageSpikeCreationData = (RageSpikeCreationData) abilityCreationData;
 
-            this.tier = rageSpikeCreationData.getTier();
-            this.toggled = rageSpikeCreationData.isToggled();
-            this.unlocked = rageSpikeCreationData.isUnlocked();
+        if (abilityCreationData instanceof SuperBreakerCreationData superBreakerCreationData) {
+            this.tier = superBreakerCreationData.getTier();
+            this.toggled = superBreakerCreationData.isToggled();
+            this.unlocked = superBreakerCreationData.isUnlocked();
         }
     }
 

@@ -291,51 +291,51 @@ its-a-triple-config:
 # Config for the ability Super Breaker
 # This active ability gives haste and double drop chance
 #
-SuperBreakerConfig:
+super-breaker-config:
   #How many tiers there should be. Highly recommended to keep at 5.
-  TierAmount: 5
+  tier-amount: 5
   #At what level should each tier become available. Tier I is the unlock level
-  TierUpgrade:
-    TierII: 225
-    TierIII: 350
-    TierIV: 500
-    TierV: 650
+  tier-upgrade:
+    tier-II: 225
+    tier-III: 350
+    tier-IV: 500
+    tier-V: 650
   #Config for each tier
-  TierI:
+  tier-I:
     #How much should the activation rate be boosted at each tier
-    ActivationBoost: 5.0
+    activation-boost: 5.0
     #Duration of the ability at each tier in seconds
-    Duration: 3
-    Cooldown: 180
-  TierII:
-    ActivationBoost: 7.5
-    Duration: 3
-    Cooldown: 180
+    duration: 3
+    cooldown: 180
+  tier-II:
+    activation-boost: 7.5
+    duration: 3
+    cooldown: 180
   TierIII:
-    ActivationBoost: 10.0
-    Duration: 5
-    Cooldown: 180
+    activation-boost: 10.0
+    duration: 5
+    cooldown: 180
   TierIV:
-    ActivationBoost: 15.0
-    Duration: 5
-    Cooldown: 180
+    activation-boost: 15.0
+    duration: 5
+    cooldown: 180
   TierV:
-    ActivationBoost: 20.0
-    Duration: 8
-    Cooldown: 180
+    activation-boost: 20.0
+    duration: 8
+    cooldown: 180
   #How this ability should be seen in the GUIS
-  Item:
-    DisplayName: '&3Super Breaker'
-    Material: DIAMOND_PICKAXE
-    Amount: 1
+  display-item:
+    display-name: '&3Super Breaker'
+    material: DIAMOND_PICKAXE
+    amount: 1
     #This lore is shown in most guis but will be ignored for certain hard coded lores for things like confirmation guis
-    PlayerLore:
+    player-lore:
       - '&bThis ability give haste and'
       - '&bincreases activation rate of Double Drop'
       - '&bGain &e%ActivationBoost%% &bfor &e%Duration% &bseconds'
       - '&bCooldown: &e%Cooldown%'
       - '&eActivate by readying and breaking a block'
-    MenuLore:
+    menu-lore:
       - '&bGives haste and increases Double Drop'
       - '&bfor a short duration'
       - '&aUnlock Level: &e%UnlockLevel%'
@@ -394,53 +394,47 @@ BlastMiningConfig:
       - '&bThis ability lets you place TNT'
       - '&band insta-break all blocks around you'
       - '&aUnlock Level: &e%UnlockLevel%'
-OreScannerConfig:
+ore-scanner-config:
   #How many tiers there should be. Highly recommended to keep at 5.
-  TierAmount: 5
+  tier-amount: 5
   #At what level should each tier become available. Tier I is the unlock level
-  TierUpgrade:
-    TierII: 350
-    TierIII: 500
-    TierIV: 650
-    TierV: 800
+  tier-upgrade:
+    tier-II: 350
+    tier-III: 500
+    tier-IV: 650
+    tier-V: 800
   #Config for each tier
-  TierI:
+  tier-I:
     #Radius for the plugin to scan
-    Radius: 7
+    radius: 7
     #Cooldown in seconds
-    Cooldown: 120
-  TierII:
-    Radius: 9
-    Cooldown: 120
-  TierIII:
-    #Radius for the plugin to scan
-    Radius: 10
-    #Cooldown in seconds
-    Cooldown: 120
-  TierIV:
-    #Radius for the plugin to scan
-    Radius: 12
-    #Cooldown in seconds
-    Cooldown: 120
-  TierV:
-    #Radius for the plugin to scan
-    Radius: 15
-    #Cooldown in seconds
-    Cooldown: 120
+    cooldown: 120
+  tier-II:
+    radius: 9
+    cooldown: 120
+  tier-III:
+    radius: 10
+    cooldown: 120
+  tier-IV:
+    radius: 12
+    cooldown: 120
+  tier-V:
+    radius: 15
+    cooldown: 120
   #How this ability should be seen in the GUIS
-  Item:
-    DisplayName: '&3Ore Scanner'
-    Material: EMERALD_ORE
-    Amount: 1
+  display-item:
+    display-name: '&3Ore Scanner'
+    material: EMERALD_ORE
+    amount: 1
     #This lore is shown in most guis but will be ignored for certain hard coded lores for things like confirmation guis
-    PlayerLore:
+    player-lore:
       - '&bScan surrounding area in a'
       - '&b%Radius% radius.'
       - '&bDisplays amount of ores'
       - '&band points to closest valuable ore'
       - '&bCooldown: &e%Cooldown%'
       - '&eActivate by readying and breaking a block'
-    MenuLore:
+    menu-lore:
       - '&bScan surrounding area'
       - '&bfor gold, emerald, and diamonds.'
       - '&bAbility will tell you nearby amounts'

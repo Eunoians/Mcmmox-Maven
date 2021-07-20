@@ -43,9 +43,7 @@ public class RicherOres extends ConfigurableBaseAbility implements ActivatableCh
     public RicherOres(@NotNull AbilityCreationData abilityCreationData) {
         super(abilityCreationData);
 
-        if (abilityCreationData instanceof RicherOresCreationData) {
-
-            RicherOresCreationData richerOresCreationData = (RicherOresCreationData) abilityCreationData;
+        if (abilityCreationData instanceof RicherOresCreationData richerOresCreationData) {
 
             this.tier = richerOresCreationData.getTier();
             this.unlocked = richerOresCreationData.isUnlocked();
