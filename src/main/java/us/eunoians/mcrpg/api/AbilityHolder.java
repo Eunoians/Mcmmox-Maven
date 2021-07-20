@@ -139,7 +139,7 @@ public class AbilityHolder {
      * when using {@link #getAbility(NamespacedKey)}.
      *
      * @param namespacedKey The {@link NamespacedKey} that maps to the {@link Ability} that is desired
-     * @return {@code null} if the {@link NamespacedKey} provided is invalid or the {@link Ability} that matches the {@link NamespacedKey}
+     * @return {@code null} if the {@link NamespacedKey} provided is invalid/the ability is not in the loadout or the {@link Ability} that matches the {@link NamespacedKey}
      */
     @Nullable
     public Ability getAbilityFromLoadout(@NotNull NamespacedKey namespacedKey) {

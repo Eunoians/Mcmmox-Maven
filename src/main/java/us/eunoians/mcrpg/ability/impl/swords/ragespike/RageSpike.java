@@ -361,10 +361,10 @@ public class RageSpike extends ConfigurableBaseActiveAbility implements Readyabl
     @Override
     public @NotNull ConfigurationSection getAbilityConfigurationSection() throws AbilityConfigurationNotFoundException {
 
-        ConfigurationSection configurationSection = getAbilityConfigurationFile().getConfigurationSection("deeper-wound-config");
+        ConfigurationSection configurationSection = getAbilityConfigurationFile().getConfigurationSection("rage-spike-config");
 
         if (configurationSection == null) {
-            throw new AbilityConfigurationNotFoundException("Configuration section known as: 'deeper-wound-config' is missing from the " + FileManager.Files.SWORDS_CONFIG.getFileName() + " file.", getAbilityID());
+            throw new AbilityConfigurationNotFoundException("Configuration section known as: 'rage-spike-config' is missing from the " + FileManager.Files.SWORDS_CONFIG.getFileName() + " file.", getAbilityID());
         }
         return configurationSection;
     }

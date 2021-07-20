@@ -10,6 +10,7 @@ import us.eunoians.mcrpg.McRPG;
 import us.eunoians.mcrpg.ability.Ability;
 import us.eunoians.mcrpg.ability.ActivatableChanceAbility;
 import us.eunoians.mcrpg.ability.ConfigurableAbility;
+import us.eunoians.mcrpg.ability.PlayerAbility;
 import us.eunoians.mcrpg.ability.configurable.ConfigurableBaseAbility;
 import us.eunoians.mcrpg.ability.creation.AbilityCreationData;
 import us.eunoians.mcrpg.annotation.AbilityIdentifier;
@@ -28,7 +29,7 @@ import java.util.List;
  * @author DiamondDagger590
  */
 @AbilityIdentifier(id = "richer_ores", abilityCreationData = RicherOresCreationData.class)
-public class RicherOres extends ConfigurableBaseAbility implements ActivatableChanceAbility {
+public class RicherOres extends ConfigurableBaseAbility implements ActivatableChanceAbility, PlayerAbility{
 
     private static final String ACTIVATION_CHANCE_KEY = "activation-chance";
     private static final String DOUBLE_DROP_BOOST_KEY = "activation-boost";
